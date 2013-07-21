@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML5的标题</title>
+<style>
+ul {width:80%;padding:5px;}
+li {list-style:none;float:left;padding:5px;margin:5px;background-color:#ccc;}
+.info{color:green;}
+</style>
+</head>
+<body>
+    <p></p>
+    {% if messages %}
+        {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+<ul>
+    {%for p in photos%}
+	<li><a href="{% url 'crop:crop_cut' p.id %}">第{{p.id}}张原图:{{p.photo_name}}  返回重新剪裁</a>
+	    <img src="{{path}}{{p.photo_name}}" alt="big"/><br/>
+		<a>剪裁后的图：</a><br/>
+		
+        <img src="{{path}}{{p.photo_thumb}}" alt="thumb"/>
+	    <hr />
+	</li>
+	
+    {%endfor%}
+</ul>
+</body>
+</html>
+
+<style>
+.fixed{ position:fixed; bottom:100px; width:20px; right:100px; height:80px; font-size:12px; cursor:pointer; background-color:#ccc; opacity:0; filter: alpha(opacity=0); z-index:999;}
+.placeholder{ height:2000px;}
+</style>
+
+
+<div id="gotop" class="fixed">
+返回顶部功能
+</div>
+<script>
+var tool = {    
+    //此方法为了避免在 ms 段时间内，多次执行func。常用 resize、scoll、mousemove等连续性事件中
+    buffer: function(func, ms, context){
+        var buffer;
+        return  function(){
+           if(buffer) return;
+            
+           buffer = setTimeout(function(){
+                func.call(this)
+                buffer = undefined;
+            },ms);
+        };
+    },
+     
+    /*读取或设置元素的透明度*/
+    opacity: function(elem, val){   
+        var setting = arguments.length > 1;
+        if("opacity" in elem.style){//elem.style["opacity"] 读取不到CSS class中的值
+            return setting ? elem.style["opacity"] = val : elem.style["opacity"];
+        }else{ 
+            if(elem.filters && elem.filters.alpha) {
+                return setting ? elem.filters.alpha["opacity"] = val*100 : elem.filters.alpha["opacity"]/100;
+            }
+        }
+    },
+     
+    //获取或设置文档对象的scrollTop
+    //function([val])
+    documentScrollTop: function(val){
+        var elem = document; 
+        return (val!== undefined) ? 
+            elem.documentElement.scrollTop = elem.body.scrollTop = val :
+            Math.max(elem.documentElement.scrollTop, elem.body.scrollTop);
+                 
+    }
+};
+//动画效果
+var effect = {  
+    //淡入
+    fadein: function (elem){
+        var val = 0;
+        var interval = 25;
+         
+        setTimeout(function(){
+            val += 0.1;
+            if(val>1){
+                tool.opacity(elem, 1)
+                return;
+            }else {
+                tool.opacity(elem, val)
+                setTimeout(arguments.callee, interval);
+            }
+        },interval);
+         
+    },
+     
+    //淡出
+    fadeout: function (elem){
+        var val = 1;
+        var interval = 25;
+         
+        setTimeout(function(){
+            val -= 0.1; 
+             
+            if(val < 0){
+                tool.opacity(elem, 0)
+                return; 
+            }else {
+                tool.opacity(elem,val) ;
+                setTimeout(arguments.callee, interval);
+            }
+        },interval);
+         
+    },
+     
+    //减速移动滚动条
+    move: function(scrollTop){
+        setTimeout(function(){
+            scrollTop = Math.floor((scrollTop * 0.65));
+            tool.documentScrollTop(scrollTop);
+            if(scrollTop !=0 ){
+                setTimeout(arguments.callee, 25);
+            }
+        },25);
+    }
+};
+ 
+//主程序
+(function(){//gotop
+    var visible = false;
+    var elem = document.getElementById("gotop");
+     
+    function onscroll(){
+        var scrollTop = tool.documentScrollTop();
+        if(scrollTop > 0){
+            if(!visible){
+                effect.fadein(elem)
+                visible = true;
+            }
+        }else{
+            if(visible){
+                effect.fadeout(elem);
+                visible = false;
+            }       
+        }
+         
+    }
+ 
+    function onclick(){
+        var scrollTop = tool.documentScrollTop();
+        effect.move(scrollTop);
+    }
+         
+    elem.onclick = onclick;
+    window.onscroll = tool.buffer(onscroll, 200, this);
+})();
+</script>
+<div class="placeholder"></div>

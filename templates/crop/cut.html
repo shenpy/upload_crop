@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>剪切</title>
+<link rel="stylesheet" type="text/css" href="/static/jquery.imgareaselect-0.9.10/css/imgareaselect-default.css" />
+</head>
+
+<body onload="doSelect()">
+
+{% if messages %}
+    {% for message in messages %}
+    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+<h3>头像剪切  <a href="{% url 'crop:crop_index' %}"><b>返回</b></a> </h3>
+<div class="area">
+    <div style="float: left;">
+        <p class="instructions">鼠标剪裁</p>
+        <div style="margin: 0pt 0.3em ;" class="frame">
+            <img src="{{vir_path}}" id="photo" alt="30"/>
+        </div>
+    </div>
+	
+    <div style="float: left; padding-top:50px;">
+        <p style="font-size: 110%; font-weight: bold; padding-left: 0.1em;">预览区域</p>
+
+        <div style="margin: 0pt 1em;" class="frame">
+            <div style="position: relative;width: 300px; height: 300px; overflow: hidden; " id="preview">
+                <img style="" src="{{vir_path}}" alt="300"/>
+            </div>
+        </div>
+
+        <form action="" method="POST">{% csrf_token %}
+        <table style="margin-top: 1em;">
+        <thead>
+        <tr>
+        <th style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;" colspan="2">
+        剪裁点坐标：
+        </th>
+        <th style="font-size: 110%; font-weight: bold; text-align: left; padding-left: 0.1em;" colspan="2">
+          尺寸：
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td style="width: 10%;"><b>X<sub>1</sub>:</b></td>
+        <td style="width: 30%;">{{form.x1}}</td>
+        <td style="width: 20%;"><b>宽度:</b></td>
+        <td>{{form.w}}</td>
+        </tr>
+        <tr>
+        <td><b>Y<sub>1</sub>:</b></td>
+        <td>{{form.y1}}</td>
+        <td><b>高度:</b></td>
+        <td>{{form.h}}</td>
+        </tr>
+        <tr>
+        <td><b>X<sub>2</sub>:</b></td>
+        <td>{{form.x2}}</td>
+        <td></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><b>Y<sub>2</sub>:</b></td>
+        <td>{{form.y2}}</td>
+        <td></td>
+        <td><input type="submit" value="保存剪裁结果"/></td>
+        </tr>
+        </tbody>
+        </table>
+        </form>
+
+    </div>
+    <div style="clear:left;"></div>
+</div>
+</body>
+</html>
+
+
+<style rel="stylesheet"  type="text/css" >
+.area {
+background:none repeat scroll 0 0  #EEEEFF;
+border:2px solid #DDDDEE;
+padding:0.6em 0.6em 1em 0.6em;
+width:85%;
+display:block;
+margin-bottom:1em;
+}
+div.frame {
+background:none repeat scroll 0 0 #FFFFFF;
+border:2px solid #DDDDDD;
+padding:0.4em;
+}
+.info{color:green;}
+</style>
+
+<script type="text/javascript" src="/static/jquery.imgareaselect-0.9.10/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="/static/jquery.imgareaselect-0.9.10/scripts/jquery.imgareaselect.min.js"></script> 
+<script type="text/javascript">
+var s;
+var w,h;
+var long1,short1,dh,dw;
+
+function preview(img, selection) {
+    
+    var s_p =  300 / (selection.width*s);  //选择区域与预览区域的比例大小
+     
+  //  w = document.getElementById("photo").offsetWidth;
+   // h = document.getElementById("photo").offsetHeight;
+    $('#preview img').css({
+        width:    Math.round( w * s_p),
+        height:    Math.round(h * s_p),
+        marginLeft: -Math.round(s*selection.x1 * s_p),
+        marginTop: -Math.round(s*selection.y1 * s_p)
+    });
+    
+    $('#id_x1').val(Math.round(selection.x1*s));
+    $('#id_y1').val(Math.round(selection.y1*s));
+    $('#id_x2').val(Math.round(selection.x2*s));
+    $('#id_y2').val(Math.round(selection.y2*s));
+    $('#id_w').val(Math.round(selection.width*s));
+    $('#id_h').val(Math.round(selection.height*s));
+}
+ 
+function doSelect() {
+    w = document.getElementById("photo").offsetWidth;
+    h = document.getElementById("photo").offsetHeight;
+	
+	var stand=600;
+	 
+	if(w>h){
+	    short1=h;
+		long1=w;
+	    dw=(w-h)/2;
+		dh=0;
+	   
+	}else{
+	    short1=w;
+		long1=h;
+		dw=0;
+		dh=(h-w)/2;
+	    
+	};
+	s = (short1/stand);
+	document.getElementById("photo").width=w/s; 
+	document.getElementById("photo").height=h/s; 
+	var s_p = 300 /(600*s)    //选择区域与预览区域的比例大小
+	$('#preview img').css({  //初始选择区域的预览
+        width:    Math.round(w * s_p),
+        height:    Math.round(h * s_p),
+        marginLeft: -Math.round(dw * s_p),
+        marginTop: -Math.round( dh * s_p)
+    });
+	  $('#id_x1').val(Math.round(dw));
+        $('#id_y1').val(Math.round(dh));
+        $('#id_x2').val(Math.round((w-dw)));
+        $('#id_y2').val(Math.round((h-dh)));
+        $('#id_w').val(Math.round(short1));
+        $('#id_h').val(Math.round(short1));         //表单数据 id_x1 ,y1 等等必须是整形
+   
+    $('#photo').imgAreaSelect({ aspectRatio: '1:1',// handles: true,
+                        fadeSpeed: 10, minHeight:600, minWidth:600, maxHeight:600, minWidth:600, onSelectChange: preview,
+                        //x1: dw, y1: dh, x2: (w-dw), y2: (h-dh)
+						x1: (dw/s), y1: (dh/s), x2: ((w-dw)/s), y2: ((h-dh)/s) 
+    });
+}
+</script>
