@@ -90,9 +90,7 @@ display:block;
 margin-bottom:1em;
 }
 div.frame {
-background:none repeat scroll 0 0 #FFFFFF;
-border:2px solid #DDDDDD;
-padding:0.4em;
+
 }
 .info{color:green;}
 </style>
@@ -129,7 +127,7 @@ function doSelect() {
     w = document.getElementById("photo").offsetWidth;
     h = document.getElementById("photo").offsetHeight;
 	
-	var stand=600;
+	var stand=400;
 	 
 	if(w>h){
 	    short1=h;
@@ -147,7 +145,7 @@ function doSelect() {
 	s = (short1/stand);
 	document.getElementById("photo").width=w/s; 
 	document.getElementById("photo").height=h/s; 
-	var s_p = 300 /(600*s)    //选择区域与预览区域的比例大小
+	var s_p = 300 /(400*s)    //选择区域与预览区域的比例大小
 	$('#preview img').css({  //初始选择区域的预览
         width:    Math.round(w * s_p),
         height:    Math.round(h * s_p),
@@ -162,7 +160,7 @@ function doSelect() {
         $('#id_h').val(Math.round(short1));         //表单数据 id_x1 ,y1 等等必须是整形
    
     $('#photo').imgAreaSelect({ aspectRatio: '1:1',// handles: true,
-                        fadeSpeed: 10, minHeight:600, minWidth:600, maxHeight:600, minWidth:600, onSelectChange: preview,
+                        fadeSpeed: 10, minHeight:400, minWidth:400, maxHeight:400, minWidth:400, onSelectChange: preview,
                         //x1: dw, y1: dh, x2: (w-dw), y2: (h-dh)
 						x1: (dw/s), y1: (dh/s), x2: ((w-dw)/s), y2: ((h-dh)/s) 
     });
