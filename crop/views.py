@@ -6,8 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 from django.contrib import messages
-import os, uuid, ImageFile, Image
-
+import os, uuid
+from PIL import ImageFile, Image
 from crop.forms import PhotoForm, CutForm
 from crop.models import Photo
 
