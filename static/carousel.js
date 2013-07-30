@@ -1130,7 +1130,7 @@
             perPage: null,
             item: function(page) {
                // return '<a href="#">' + page + '</a>';///////////////////////////////////////////////////////////////
-  		      return '<a href="#"></a>';
+  		      return '<a></a>';
             },
             event:  'click',
             method: 'scroll'
