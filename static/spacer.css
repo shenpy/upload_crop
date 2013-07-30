@@ -9,7 +9,9 @@ body {
     overflow: hidden;
     width: 960px;
     height: 600px;
-  
+
+}
+
 .spacerimg {
     width: 960px;
     height: 600px;
@@ -25,7 +27,7 @@ body {
 .spacer li {
     float: left;
 }
- 
+
 .spacer-control-prev {
     position: absolute;
     top: 45%;
@@ -39,9 +41,9 @@ body {
 
 .spacer-control-next {
     position: absolute;
-	  top: 45%;
+    top: 45%;
     right: 0px;
-   	z-index: 999;
+    z-index: 999;
     width: 30px;
     height: 50px;
     background: url(img/arrow-right.png);
