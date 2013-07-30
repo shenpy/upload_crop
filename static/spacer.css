@@ -1,0 +1,93 @@
+body {
+    margin:0 auto;
+    padding:0;
+}
+
+.spacer {
+    margin:0 auto;
+    position: relative;
+    overflow: hidden;
+    width: 960px;
+    height: 600px;
+  
+.spacerimg {
+    width: 960px;
+    height: 600px;
+}
+ 
+.spacer ul {
+    width: 20000em;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.spacer li {
+    float: left;
+}
+ 
+.spacer-control-prev {
+    position: absolute;
+    top: 45%;
+    width: 30px;
+    height: 50px;
+    background: #4E443C;
+    left: 0px;
+    background: url(img/arrow-left.png);
+    opacity: .6;
+}
+
+.spacer-control-next {
+    position: absolute;
+	  top: 45%;
+    right: 0px;
+   	z-index: 999;
+    width: 30px;
+    height: 50px;
+    background: url(img/arrow-right.png);
+}
+
+.spacer-control-prev.inactive,
+.spacer-control-next.inactive {
+    opacity: .5;
+    cursor: default;
+}
+
+.spacer-pagination {
+    position: relative;
+    bottom: 50px;
+    left:  600px;
+    height:30px;
+}
+
+.spacer-pagination a {
+    text-decoration: none;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    color: #4E443C;
+    border-radius: 14px;
+    padding: 3px;
+    margin-right: 3px;
+    opacity: 0.5;
+}
+
+.spacer-pagination a.active {
+    background: #4E443C;
+    color: #fff;
+    opacity: 1;
+}
+
+.spacer-pagination a:hover {
+    text-decoration: none;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #99CCFF;
+    color: #4E443C;
+    border-radius: 14px;
+    padding: 3px;
+    margin-right: 3px;
+    opacity: 1;
+}
