@@ -32,21 +32,17 @@ body {
     position: absolute;
     top: 45%;
   //text-align: center;
-    left: 20px;
-    width: 40px;
     height: 60px;
     color: #fff;
     font: 60px Arial, sans-serif;
-	cursor: default;
+    cursor: default;
 }
 
 .spacer-control-next {
     position: absolute;
     top: 45%;
   //text-align: center;
-    width: 40px;
-    height: 60px;
-	right: -20px;
+    right: -20px;
     color: #fff;
     font: 60px Arial, sans-serif;
     cursor: default;
