@@ -31,22 +31,25 @@ body {
 .spacer-control-prev {
     position: absolute;
     top: 45%;
-    width: 30px;
-    height: 50px;
-    background: #4E443C;
-    left: 0px;
-    background: url(img/arrow-left.png) black;
-    opacity: .6;
+  //text-align: center;
+    left: 20px;
+    width: 40px;
+    height: 60px;
+    color: #fff;
+    font: 60px Arial, sans-serif;
+	cursor: default;
 }
 
 .spacer-control-next {
     position: absolute;
     top: 45%;
-    right: 0px;
-    z-index: 999;
-    width: 30px;
-    height: 50px;
-    background: url(img/arrow-right.png) black;
+  //text-align: center;
+    width: 40px;
+    height: 60px;
+	right: -20px;
+    color: #fff;
+    font: 60px Arial, sans-serif;
+    cursor: default;
 }
 
 .spacer-control-prev.inactive,
@@ -73,6 +76,7 @@ body {
     padding: 3px;
     margin-right: 3px;
     opacity: 0.5;
+    border: 1px solid #aaaaaa;
 }
 
 .spacer-pagination a.active {
