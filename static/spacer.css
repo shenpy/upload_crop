@@ -35,7 +35,7 @@ body {
     height: 50px;
     background: #4E443C;
     left: 0px;
-    background: url(img/arrow-left.png);
+    background: url(img/arrow-left.png) black;
     opacity: .6;
 }
 
@@ -46,7 +46,7 @@ body {
     z-index: 999;
     width: 30px;
     height: 50px;
-    background: url(img/arrow-right.png);
+    background: url(img/arrow-right.png) black;
 }
 
 .spacer-control-prev.inactive,
