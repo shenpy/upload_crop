@@ -1,11 +1,15 @@
 (function($) {
     $(function() {
         $('.spacer').jcarousel({
-            auto: 3, //delay 3 seconds
             wrap: 'circular',
             animation: 1000,
             scroll: 1
-  		      });
+  		});
+                
+        $('.spacer').jcarouselAutoscroll({
+            // Plugin configuration goes here
+        });
+       
        
         $('.spacer-control-prev')
             .on('active.jcarouselcontrol', function() {
