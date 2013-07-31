@@ -2,12 +2,10 @@
     $(function() {
         $('.spacer').jcarousel({
             wrap: 'circular',
-            animation: 1000,
-            scroll: 1
-  		});
+        });
                 
         $('.spacer').jcarouselAutoscroll({
-            // Plugin configuration goes here
+            'interval': 1000,
         });
        
        
