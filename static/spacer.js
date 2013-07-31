@@ -2,11 +2,19 @@
     $(function() {
         $('.spacer').jcarousel({
             wrap: 'circular',
+            animation: 1000,
         });
                 
         $('.spacer').jcarouselAutoscroll({
-            'interval': 1000,
-        });
+            'interval': 2000,
+    		'target': '+=1',
+			create: $('.spacer').hover(function() {   // stop autoscroll on mousehover
+                          $(this).jcarouselAutoscroll('stop');
+                    },
+                    function() {
+                          $(this).jcarouselAutoscroll('start');
+                    })
+	    });
        
        
         $('.spacer-control-prev')
